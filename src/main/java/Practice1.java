@@ -21,7 +21,6 @@ public class Practice1 {
     static List<Double> forLadderPlusExpSecondWay = new ArrayList<>();
 
     public static void main(String[] args) {
-
         tests();
         createXlsx();
     }
@@ -127,7 +126,6 @@ public class Practice1 {
             long[][] firstArray = firstArray((int) Math.pow(2,t), (int) Math.pow(2, 13));
             long[][] secondArray = secondArray((int) Math.pow(2,t), (int) Math.pow(2, 13));
 
-//            firstArray[firstArray.length-1][0] + 1;
             long targetFirstWay = (long) ((2 * Math.pow(2,13))+1);
             long targetSecondWay = (long) ((16 * Math.pow(2,13))+1);
 
@@ -153,7 +151,6 @@ public class Practice1 {
                 long startLadderPlusExpTime = System.nanoTime();
                 ladderPlusExpSearch(firstArray, targetFirstWay);
                 long nanosForLadderPlusExp = (System.nanoTime() - startLadderPlusExpTime);
-
 
 
                 long startLadderTimeSecondWay = System.nanoTime();
@@ -198,7 +195,7 @@ public class Practice1 {
 
         double sum2 = nanosArrayForLadderPlusExp.stream().mapToDouble(a -> a).sum();
         forLadderPlusExp.add(sum2 / nanosArrayForLadderPlusExp.size() / 1000000000);
-        System.out.println("Average time for BinarySearch in " + ((int)Math.pow(2,t)) + "xN matrix " + sum2 / nanosArrayForLadderPlusExp.size() + " ns");
+        System.out.println("Average time for LadderPlusExp in " + ((int)Math.pow(2,t)) + "xN matrix " + sum2 / nanosArrayForLadderPlusExp.size() + " ns");
     }
 
     public static void createXlsx() {
