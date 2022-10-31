@@ -179,7 +179,7 @@ public class Practice1 {
             arraysForXlsx(t, nanosArrayForStairs, nanosArrayForBinary, nanosArrayForLadderPlusExp, forLadder, forBinary, forLadderPlusExp);
             arraysForXlsx(t, nanosArrayForStairsSecondWay, nanosArrayForBinarySecondWay, nanosArrayForLadderPlusExpSecondWay, forLadderSecondWay, forBinarySecondWay, forLadderPlusExpSecondWay);
 
-            forMatrix.add("2**" + t + "x" + "N");
+            forMatrix.add((int)Math.pow(2,t) + "x" + "N");
             t++;
         }
     }
@@ -281,6 +281,7 @@ public class Practice1 {
         XDDFCategoryAxis bottomAxis = chart.createCategoryAxis(AxisPosition.BOTTOM);
         bottomAxis.setTitle("Size");
         XDDFValueAxis leftAxis = chart.createValueAxis(AxisPosition.LEFT);
+        leftAxis.setLogBase(10.0);
         leftAxis.setTitle("Time in sec");
         XDDFDataSource<String> columns = XDDFDataSourcesFactory.fromStringCellRange(sheet, new CellRangeAddress(1, 13, 0, 0));
         XDDFNumericalDataSource<Double> naive = XDDFDataSourcesFactory.fromNumericCellRange(sheet, new CellRangeAddress(1, 13, 1, 1));
