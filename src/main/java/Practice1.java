@@ -20,6 +20,10 @@ public class Practice1 {
     static List<Double> forBinarySecondWay = new ArrayList<>();
     static List<Double> forLadderPlusExpSecondWay = new ArrayList<>();
 
+    static List<Double> forLadderTheRatio = new ArrayList<>();
+    static List<Double> forBinaryTheRatio = new ArrayList<>();
+    static List<Double> forLadderPlusExpTheRatio = new ArrayList<>();
+
     public static void main(String[] args) {
         tests();
         createXlsx();
@@ -67,6 +71,7 @@ public class Practice1 {
             }
         }
     }
+
     public static int binary(long[] array, long target) {
         int low = 0, high = array.length - 1;
         while (low <= high) {
@@ -76,10 +81,10 @@ public class Practice1 {
             } else if (target > array[mid]) {
                 low = mid + 1;
             } else {
-                high = mid -1;
+                high = mid - 1;
             }
         }
-        return low > array.length -1 ? low - 1 : low;
+        return low > array.length - 1 ? low - 1 : low;
     }
 
     public static void ladderPlusExpSearch(long[][] array, long target) {
@@ -92,10 +97,10 @@ public class Practice1 {
                 int start = n1;
                 int n2 = n1;
                 int i = 1;
-                while (array[n2][m1] <= target && n2 < array.length -1) {
+                while (array[n2][m1] <= target && n2 < array.length - 1) {
                     i = i * 2;
                     n2 = n2 + i;
-                    if (n2 >= array.length){
+                    if (n2 >= array.length) {
                         n2 = array.length - 1;
                     }
                 }
@@ -106,7 +111,7 @@ public class Practice1 {
                 }
                 int c = binary(arr, target);
                 n1 += c;
-                if (n1 == array.length){
+                if (n1 == array.length) {
                     n1 -= 1;
                 }
                 if (array[n1][m1] == target) {
@@ -120,14 +125,14 @@ public class Practice1 {
     }
 
 
-    public static void tests(){
+    public static void tests() {
         int t = 1;
         while (t < 14) {
-            long[][] firstArray = firstArray((int) Math.pow(2,t), (int) Math.pow(2, 13));
-            long[][] secondArray = secondArray((int) Math.pow(2,t), (int) Math.pow(2, 13));
+            long[][] firstArray = firstArray((int) Math.pow(2, t), (int) Math.pow(2, 13));
+            long[][] secondArray = secondArray((int) Math.pow(2, t), (int) Math.pow(2, 13));
 
-            long targetFirstWay = (long) ((2 * Math.pow(2,13))+1);
-            long targetSecondWay = (long) ((16 * Math.pow(2,13))+1);
+            long targetFirstWay = (long) ((2 * Math.pow(2, 13)) + 1);
+            long targetSecondWay = (long) ((16 * Math.pow(2, 13)) + 1);
 
             List<Long> nanosArrayForStairs = new ArrayList<>();
             List<Long> nanosArrayForBinary = new ArrayList<>();
@@ -179,7 +184,11 @@ public class Practice1 {
             arraysForXlsx(t, nanosArrayForStairs, nanosArrayForBinary, nanosArrayForLadderPlusExp, forLadder, forBinary, forLadderPlusExp);
             arraysForXlsx(t, nanosArrayForStairsSecondWay, nanosArrayForBinarySecondWay, nanosArrayForLadderPlusExpSecondWay, forLadderSecondWay, forBinarySecondWay, forLadderPlusExpSecondWay);
 
-            forMatrix.add((int)Math.pow(2,t) + "x" + "N");
+            forLadderTheRatio.add(forLadder.get(forLadder.size() - 1) / forLadderSecondWay.get(forLadderSecondWay.size() - 1));
+            forBinaryTheRatio.add(forBinary.get(forBinary.size() - 1) / forBinarySecondWay.get(forBinarySecondWay.size() - 1));
+            forLadderPlusExpTheRatio.add(forLadderPlusExp.get(forLadderPlusExp.size() - 1) / forLadderPlusExpSecondWay.get(forLadderPlusExpSecondWay.size() - 1));
+
+            forMatrix.add((int) Math.pow(2, t) + "x" + "N");
             t++;
         }
     }
@@ -187,15 +196,15 @@ public class Practice1 {
     private static void arraysForXlsx(int t, List<Long> nanosArrayForStairs, List<Long> nanosArrayForBinary, List<Long> nanosArrayForLadderPlusExp, List<Double> forLadder, List<Double> forBinary, List<Double> forLadderPlusExp) {
         double sum = nanosArrayForStairs.stream().mapToDouble(a -> a).sum();
         forLadder.add(sum / nanosArrayForStairs.size() / 1000000000);
-        System.out.println("Average time for StairsSearch in " + ((int)Math.pow(2,t)) + "xN matrix: " + sum / nanosArrayForStairs.size() + " ns");
+        System.out.println("Average time for StairsSearch in " + ((int) Math.pow(2, t)) + "xN matrix: " + sum / nanosArrayForStairs.size() + " ns");
 
         double sum1 = nanosArrayForBinary.stream().mapToDouble(a -> a).sum();
         forBinary.add(sum1 / nanosArrayForBinary.size() / 1000000000);
-        System.out.println("Average time for BinarySearch in " + ((int)Math.pow(2,t)) + "xN matrix " + sum1 / nanosArrayForBinary.size() + " ns");
+        System.out.println("Average time for BinarySearch in " + ((int) Math.pow(2, t)) + "xN matrix " + sum1 / nanosArrayForBinary.size() + " ns");
 
         double sum2 = nanosArrayForLadderPlusExp.stream().mapToDouble(a -> a).sum();
         forLadderPlusExp.add(sum2 / nanosArrayForLadderPlusExp.size() / 1000000000);
-        System.out.println("Average time for LadderPlusExp in " + ((int)Math.pow(2,t)) + "xN matrix " + sum2 / nanosArrayForLadderPlusExp.size() + " ns");
+        System.out.println("Average time for LadderPlusExp in " + ((int) Math.pow(2, t)) + "xN matrix " + sum2 / nanosArrayForLadderPlusExp.size() + " ns");
     }
 
     public static void createXlsx() {
@@ -233,14 +242,33 @@ public class Practice1 {
 
             cell2 = row2.createCell((short) 3);
             cell2.setCellValue("LadderPlusExp");
+
+            String sheetName3 = "The ratio";
+            XSSFSheet sheet3 = wb.createSheet(sheetName3);
+
+            Row row3 = sheet3.createRow((short) 0);
+
+            Cell cell3 = row3.createCell((short) 0);
+            cell3.setCellValue("MatrixSize");
+
+            cell3 = row3.createCell((short) 1);
+            cell3.setCellValue("Binary");
+
+            cell3 = row3.createCell((short) 2);
+            cell3.setCellValue("Ladder");
+
+            cell3 = row3.createCell((short) 3);
+            cell3.setCellValue("LadderPlusExp");
             int count = 1;
             while (count < 14) {
                 createRows(sheet, count, forBinary, forLadder, forLadderPlusExp);
                 createRows(sheet2, count, forBinarySecondWay, forLadderSecondWay, forLadderPlusExpSecondWay);
+                createRows(sheet3, count, forBinaryTheRatio, forLadderTheRatio, forLadderPlusExpTheRatio);
                 count++;
             }
-            graph(sheet,"The first type of generation");
-            graph(sheet2,"The second type of generation");
+            graph(sheet, "The first type of generation",10.0,"Time in sec");
+            graph(sheet2, "The second type of generation",10.0,"Time in sec");
+            graph(sheet3, "The ratio of the two types of graphs",0.0,"The ratio");
             String filename = "statistics.xlsx";
             try (FileOutputStream fileOut = new FileOutputStream(filename)) {
                 wb.write(fileOut);
@@ -270,7 +298,7 @@ public class Practice1 {
         cell1.setCellValue(forLadderPlusExp.get(count - 1));
     }
 
-    public static void graph(XSSFSheet sheet, String name){
+    public static void graph(XSSFSheet sheet, String name, double log, String nameLeft) {
         XSSFDrawing drawing = sheet.createDrawingPatriarch();
         XSSFClientAnchor anchor = drawing.createAnchor(0, 0, 0, 0, 5, 2, 15, 23);
         XSSFChart chart = drawing.createChart(anchor);
@@ -281,14 +309,15 @@ public class Practice1 {
         XDDFCategoryAxis bottomAxis = chart.createCategoryAxis(AxisPosition.BOTTOM);
         bottomAxis.setTitle("Size");
         XDDFValueAxis leftAxis = chart.createValueAxis(AxisPosition.LEFT);
-        leftAxis.setLogBase(10.0);
-        leftAxis.setTitle("Time in sec");
+        if (log != 0)
+            leftAxis.setLogBase(log);
+        leftAxis.setTitle(nameLeft);
         XDDFDataSource<String> columns = XDDFDataSourcesFactory.fromStringCellRange(sheet, new CellRangeAddress(1, 13, 0, 0));
-        XDDFNumericalDataSource<Double> naive = XDDFDataSourcesFactory.fromNumericCellRange(sheet, new CellRangeAddress(1, 13, 1, 1));
+        XDDFNumericalDataSource<Double> binary = XDDFDataSourcesFactory.fromNumericCellRange(sheet, new CellRangeAddress(1, 13, 1, 1));
         XDDFNumericalDataSource<Double> ladder = XDDFDataSourcesFactory.fromNumericCellRange(sheet, new CellRangeAddress(1, 13, 2, 2));
         XDDFNumericalDataSource<Double> ladderPlusExp = XDDFDataSourcesFactory.fromNumericCellRange(sheet, new CellRangeAddress(1, 13, 3, 3));
         XDDFLineChartData data = (XDDFLineChartData) chart.createData(ChartTypes.LINE, bottomAxis, leftAxis);
-        XDDFLineChartData.Series series1 = (XDDFLineChartData.Series) data.addSeries(columns, naive);
+        XDDFLineChartData.Series series1 = (XDDFLineChartData.Series) data.addSeries(columns, binary);
         series1.setTitle("Binary", null);
         series1.setSmooth(false);
         series1.setMarkerStyle(MarkerStyle.STAR);
@@ -302,4 +331,5 @@ public class Practice1 {
         series3.setMarkerStyle(MarkerStyle.DIAMOND);
         chart.plot(data);
     }
+
 }
